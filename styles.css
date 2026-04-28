@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.game-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-section {
+    margin-bottom: 30px;
+}
+
+.difficulty-section h3 {
+    color: #34495e;
+    font-size: 1.3em;
+}
+
+.difficulty-section button {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    padding: 12px 20px;
+    margin: 8px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.difficulty-section button:hover {
+    background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+    transform: scale(1.05);
+}
+
+.lives {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+#feedback-message {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+    min-height: 25px;
+    color: #2c3e50;
+}
+
+#guess-input {
+    padding: 12px;
+    font-size: 18px;
+    border: 3px solid #3498db;
+    border-radius: 10px;
+    margin-right: 10px;
+    width: 150px;
+    text-align: center;
+}
+
+#guess-input:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+#submit-guess, #play-again {
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+#submit-guess:hover, #play-again:hover {
+    background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+    transform: scale(1.05);
+}
+
+#range-display {
+    font-size: 18px;
+    color: #7f8c8d;
+    font-weight: bold;
+}
