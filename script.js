@@ -1,12 +1,24 @@
 console.log("Script Started");
 let secretNumber = 0;
 let guessCount = 0;
+let maxLives = 5;
+let currentLives = 5;
+
 
 // Get the difficulty buttons
 let easyButton = document.getElementById("easy-btn");
 let mediumButton = document.getElementById("medium-btn");
 let hardButton = document.getElementById("hard-btn");
 let submitButton = document.getElementById("submit-guess");
+
+function updateLivesDisplay() {
+    let livesDisplay = document.getElementById("lives-display");
+    let hearts = "";
+    for (let i = 0; i < currentLives; i++) {
+        hearts = hearts + "❤️";
+    }
+    livesDisplay.innerText = hearts;
+}
 
 //Test if buttons work
 easyButton.addEventListener("click", function() {
@@ -31,7 +43,7 @@ mediumButton.addEventListener("click", function() {
 
 hardButton.addEventListener("click", function() {
     // Make a number between 500
-    secretNumber = Math.floor(Math.random() * 500) + 1
+    secretNumber = Math.floor(Math.random() * 500) + 1;
     guessCount = 0; // resets guess counter
 
     //Change the text to show the range
@@ -40,25 +52,31 @@ hardButton.addEventListener("click", function() {
 
 });
 
-// Function to handle guesses
+
 function handleGuess() {
     if (secretNumber === 0) {
-        alert("Please choose a diffcultu first!");
+        alert("Please choose a difficulty first!");
         return;
     }
+    
     let guessInput = document.getElementById("guess-input");
     let playerGuess = Number(guessInput.value);
-
-    guessCount = guessCount + 1; // counts each guess
+    guessCount = guessCount + 1;
     
     if (playerGuess == secretNumber) {
         alert("Correct! You win!");
-    } else if (playerGuess > secretNumber) {
-        alert("Too high! Try again!");
     } else {
-        alert("Too low! Try again!");
+        currentLives = currentLives - 1;  // Lose a life!
+        updateLivesDisplay();  // Update the hearts
+        
+        if (playerGuess > secretNumber) {
+            alert("Too high! Try again!");
+        } else {
+            alert("Too low! Try again!");
+        }
     }
 }
 
 submitButton.addEventListener("click", handleGuess);
+
 
