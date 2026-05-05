@@ -52,7 +52,6 @@ hardButton.addEventListener("click", function() {
 
 });
 
-
 function handleGuess() {
     if (secretNumber === 0) {
         alert("Please choose a difficulty first!");
@@ -64,10 +63,20 @@ function handleGuess() {
     guessCount = guessCount + 1;
     
     if (playerGuess == secretNumber) {
+        playWinAnimation
         alert("Correct! You win!");
+        resetGame();
     } else {
         currentLives = currentLives - 1;  // Lose a life!
         updateLivesDisplay();  // Update the hearts
+        
+        // Check if game is over
+        if (currentLives === 0) {
+            playLoseAnimation
+            alert("Game Over! The number was " + secretNumber);
+            resetGame();
+            return;
+        }
         
         if (playerGuess > secretNumber) {
             alert("Too high! Try again!");
@@ -77,6 +86,40 @@ function handleGuess() {
     }
 }
 
+
 submitButton.addEventListener("click", handleGuess);
+
+function resetGame() {
+    currentLives = maxLives;
+    updateLivesDisplay();
+    secretNumber = 0;
+    guessCount = 0;
+}
+
+
+function playWinAnimation() {
+    let gameContainer = document.getElementById("game-container");
+    gameContainer.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
+    gameContainer.style.transform = "scale(1.05)";
+    
+    // Change back after 1 second
+    setTimeout(function() {
+        gameContainer.style.background = "#ffffff";
+        gameContainer.style.transform = "scale(1)";
+    }, 1000);
+}
+
+
+function playLoseAnimation() {
+    let gameContainer = document.getElementById("game-container");
+    gameContainer.style.background = "linear-gradient(45deg, #e74c3c, #c0392b)";
+    gameContainer.style.transform = "scale(0.95)";
+    
+    // Change back after 1 second
+    setTimeout(function() {
+        gameContainer.style.background = "#ffffff";
+        gameContainer.style.transform = "scale(1)";
+    }, 1000);
+}
 
 
