@@ -1,83 +1,111 @@
 console.log("Script Started");
-let secretNumber = 0;
+// Game state variables
+let secretNumber = 0; // hold the random number player needs to guess
 let guessCount = 0;
 let maxLives = 5;
 let currentLives = 5;
-
-
-// Get the difficulty buttons
+//Gets html elements
 let easyButton = document.getElementById("easy-btn");
 let mediumButton = document.getElementById("medium-btn");
-let hardButton = document.getElementById("hard-btn");
+const hardButton = document.getElementById("hard-btn");
 let submitButton = document.getElementById("submit-guess");
+let gameContainer = document.getElementById("game-container");
 
+// updates the heart display based on current lives and function is called when we need to update hearts on screen
 function updateLivesDisplay() {
     let livesDisplay = document.getElementById("lives-display");
     let hearts = "";
     for (let i = 0; i < currentLives; i++) {
-        hearts = hearts + "❤️";
+        hearts = hearts + "❤️"; // every time the loop runs and will add one hearts
     }
     livesDisplay.innerText = hearts;
 }
 
-//Test if buttons work
-easyButton.addEventListener("click", function() {
-    // Makes a random number 1-50
-    secretNumber = Math.floor(Math.random() * 50) + 1;
-    guessCount = 0; // Reset guess counter
+// Plats green animation when player wins
+function playWinAnimation() {
+    let gameContainer = document.getElementById("game-container");
+    gameContainer.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
+    gameContainer.style.transform = "scale(1.05)";
+    
+    setTimeout(function() {
+        gameContainer.style.background = "#ffffff";
+        gameContainer.style.transform = "scale(1)";
+    }, 1000);
+}
 
-    //change the text to show the range
+function playLoseAnimation() {
+    let gameContainer = document.getElementById("game-container");
+    gameContainer.style.background = "linear-gradient(45deg, #e74c3c, #c0392b)";
+    gameContainer.style.transform = "scale(0.95)";
+    
+    // Reset to normal after 1 second
+    setTimeout(function() {
+        gameContainer.style.background = "#ffffff";
+        gameContainer.style.transform = "scale(1)";
+    }, 1000);
+}
+
+// Resets the game to starting state
+function resetGame() {
+    currentLives = maxLives;
+    updateLivesDisplay();
+    secretNumber = 0;
+    guessCount = 0;
+}
+// easy difficulty: random number 1-50
+easyButton.addEventListener("click", function() {
+    secretNumber = Math.floor(Math.random() * 50) + 1;
+    guessCount = 0;
     let rangeDisplay = document.getElementById("range-display");
     rangeDisplay.innerText = "Guess a number between 1 and 50!";
 });
-
+// medium diffculty: random number 1-100
 mediumButton.addEventListener("click", function() {
-    // Make a ramdon number 1-100
     secretNumber = Math.floor(Math.random() * 100) + 1;
-    guessCount = 0; // reset guess counter
-
-    // Change the text to show the range
+    guessCount = 0;
     let rangeDisplay = document.getElementById("range-display");
     rangeDisplay.innerText = "Guess a number between 1 and 100!";
 });
-
+// Hard diffcultyL random number 1-500
 hardButton.addEventListener("click", function() {
-    // Make a number between 500
     secretNumber = Math.floor(Math.random() * 500) + 1;
-    guessCount = 0; // resets guess counter
-
-    //Change the text to show the range
+    guessCount = 0;
     let rangeDisplay = document.getElementById("range-display");
     rangeDisplay.innerText = "Guess a number between 1 and 500!";
-
 });
-
+// Main function that handles player guesses 
 function handleGuess() {
     if (secretNumber === 0) {
         alert("Please choose a difficulty first!");
         return;
     }
-    
+    // Get player's gyess from input
     let guessInput = document.getElementById("guess-input");
     let playerGuess = Number(guessInput.value);
     guessCount = guessCount + 1;
     
+    // check if guess is correct
     if (playerGuess == secretNumber) {
-        playWinAnimation
-        alert("Correct! You win!");
-        resetGame();
-    } else {
-        currentLives = currentLives - 1;  // Lose a life!
-        updateLivesDisplay();  // Update the hearts
-        
-        // Check if game is over
-        if (currentLives === 0) {
-            playLoseAnimation
-            alert("Game Over! The number was " + secretNumber);
+        playWinAnimation();
+        // wait 1 second then show win message
+        setTimeout(function() {
+            alert("Correct! You win!");
             resetGame();
+        }, 1000);
+    } else {
+        // wrong guess lose a life
+        currentLives = currentLives - 1;
+        updateLivesDisplay();
+        // check if game over (no lives left)
+        if (currentLives === 0) {
+            playLoseAnimation();
+            setTimeout(function() {
+                alert("Game Over! The number was " + secretNumber);
+                resetGame();
+            }, 1000);
             return;
         }
-        
+        // give hints too high or too low
         if (playerGuess > secretNumber) {
             alert("Too high! Try again!");
         } else {
@@ -85,41 +113,5 @@ function handleGuess() {
         }
     }
 }
-
-
+// Listen for submit button clicks
 submitButton.addEventListener("click", handleGuess);
-
-function resetGame() {
-    currentLives = maxLives;
-    updateLivesDisplay();
-    secretNumber = 0;
-    guessCount = 0;
-}
-
-
-function playWinAnimation() {
-    let gameContainer = document.getElementById("game-container");
-    gameContainer.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
-    gameContainer.style.transform = "scale(1.05)";
-    
-    // Change back after 1 second
-    setTimeout(function() {
-        gameContainer.style.background = "#ffffff";
-        gameContainer.style.transform = "scale(1)";
-    }, 1000);
-}
-
-
-function playLoseAnimation() {
-    let gameContainer = document.getElementById("game-container");
-    gameContainer.style.background = "linear-gradient(45deg, #e74c3c, #c0392b)";
-    gameContainer.style.transform = "scale(0.95)";
-    
-    // Change back after 1 second
-    setTimeout(function() {
-        gameContainer.style.background = "#ffffff";
-        gameContainer.style.transform = "scale(1)";
-    }, 1000);
-}
-
-
