@@ -11,6 +11,12 @@ const hardButton = document.getElementById("hard-btn");
 let submitButton = document.getElementById("submit-guess");
 let gameContainer = document.getElementById("game-container");
 
+// Helper function that generates and returns a random number
+function generateRandomNumber(maxNumber) {
+    let randomNum = Math.floor(Math.random() * maxNumber) + 1;
+    return randomNum;
+}
+
 // updates the heart display based on current lives and function is called when we need to update hearts on screen
 function updateLivesDisplay() {
     let livesDisplay = document.getElementById("lives-display");
@@ -54,21 +60,21 @@ function resetGame() {
 }
 // easy difficulty: random number 1-50
 easyButton.addEventListener("click", function() {
-    secretNumber = Math.floor(Math.random() * 50) + 1;
+    secretNumber = generateRandomNumber(50);
     guessCount = 0;
     let rangeDisplay = document.getElementById("range-display");
     rangeDisplay.innerText = "Guess a number between 1 and 50!";
 });
 // medium diffculty: random number 1-100
 mediumButton.addEventListener("click", function() {
-    secretNumber = Math.floor(Math.random() * 100) + 1;
+    secretNumber = generateRandomNumber(100);
     guessCount = 0;
     let rangeDisplay = document.getElementById("range-display");
     rangeDisplay.innerText = "Guess a number between 1 and 100!";
 });
 // Hard diffcultyL random number 1-500
 hardButton.addEventListener("click", function() {
-    secretNumber = Math.floor(Math.random() * 500) + 1;
+    secretNumber = generateRandomNumber(500);
     guessCount = 0;
     let rangeDisplay = document.getElementById("range-display");
     rangeDisplay.innerText = "Guess a number between 1 and 500!";
